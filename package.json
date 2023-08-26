@@ -1,26 +1,22 @@
 {
-  "name": "telegraf-sqlite-template",
+  "name": "scrap-ping-bot",
   "version": "0.1.1",
   "description": "Template for creating future telegram bot apps",
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "build": "npm run generate && npm run deploy && tsc -p .",
-    "dev": "nodemon src/index.ts",
-    "generate": "prisma generate",
-    "deploy": "prisma migrate deploy",
-    "migrate": "prisma migrate dev",
-    "reset": "prisma migrate reset"
+    "build": "tsc -p .",
+    "dev": "nodemon src/index.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/francisyzy/telegraf-sqlite-template.git"
+    "url": "git+https://github.com/francisyzy/scrap-ping-bot.git"
   },
   "author": "francisyzy",
   "bugs": {
-    "url": "https://github.com/francisyzy/telegraf-sqlite-template/issues"
+    "url": "https://github.com/francisyzy/scrap-ping-bot/issues"
   },
-  "homepage": "https://github.com/francisyzy/telegraf-sqlite-template#readme",
+  "homepage": "https://github.com/francisyzy/scrap-ping-bot#readme",
   "engines": {
     "node": "18.x"
   },

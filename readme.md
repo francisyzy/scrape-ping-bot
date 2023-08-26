@@ -4,7 +4,7 @@ All of the code is written in typescript which is similar to javascript but is t
 
 ## Getting started with template
 
-Click [use this template](https://github.com/francisyzy/telegraf-sqlite-template/generate) to create a new Repo for your new telegram bot. _[Find out more on template repos](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/creating-a-repository-from-a-template)_
+Click [use this template](https://github.com/francisyzy/scrap-ping-bot/generate) to create a new Repo for your new telegram bot. _[Find out more on template repos](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/creating-a-repository-from-a-template)_
 
 ### Setup environment
 
