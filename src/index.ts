@@ -7,11 +7,11 @@ import { toEscapeHTMLMsg } from "./utils/messageHandler";
 import { printBotInfo } from "./utils/consolePrintUsername";
 
 import bot from "./lib/bot";
-import helper from "./commands/helper";
-import echo from "./commands/echo";
-import catchAll from "./commands/catch-all";
+import { fetchWebpageContent } from "./utils/scrape";
+import { sendNotification } from "./utils/send";
+import { schedule } from "node-cron";
 
-const index = () => {
+const index = async () => {
   bot.use(Telegraf.log());
   bot.use((ctx, next) => {
     if (
@@ -44,11 +44,28 @@ const index = () => {
   bot.launch();
   printBotInfo(bot);
 
-  helper();
-  echo();
-
-  //Catch all unknown messages/commands
-  catchAll();
+  // Store the initial content of the webpage
+  let initialContent: string | null = null;
+  schedule("6,26,46 * * * *", async () => {
+    const newContent = await fetchWebpageContent();
+    // console.log(newContent);
+    console.log("Running scrape");
+    sendNotification("Scraping..");
+    if (newContent !== null) {
+      if (initialContent === null) {
+        console.log("Setting initial content");
+        initialContent = newContent;
+      } else if (newContent !== initialContent) {
+        console.log("Content Diff!");
+        sendNotification(
+          "@" +
+            config.OWNER_USERNAME +
+            " Webpage content has changed!",
+        );
+        initialContent = newContent;
+      }
+    }
+  });
 };
 
 index();
