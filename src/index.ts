@@ -50,14 +50,14 @@ const index = async () => {
     const newContent = await fetchWebpageContent();
     // console.log(newContent);
     console.log("Running scrape");
-    sendNotification("Scraping..");
+    await sendNotification("Scraping..");
     if (newContent !== null) {
       if (initialContent === null) {
         console.log("Setting initial content");
         initialContent = newContent;
       } else if (newContent !== initialContent) {
         console.log("Content Diff!");
-        sendNotification(
+        await sendNotification(
           "@" +
             config.OWNER_USERNAME +
             " Webpage content has changed!",
