@@ -7,7 +7,7 @@ import { toEscapeHTMLMsg } from "./utils/messageHandler";
 import { printBotInfo } from "./utils/consolePrintUsername";
 
 import bot from "./lib/bot";
-import { fetchWebpageContent } from "./utils/scrape";
+import { fetchWebpageContent, findIphone } from "./utils/scrape";
 import { sendNotification } from "./utils/send";
 import { schedule } from "node-cron";
 
@@ -45,24 +45,40 @@ const index = async () => {
   printBotInfo(bot);
 
   // Store the initial content of the webpage
-  let initialContent: string | null = null;
-  schedule("6,26,46 * * * *", async () => {
-    const newContent = await fetchWebpageContent();
+  let initialContent: string = findIphone(
+    await fetchWebpageContent(),
+  );
+  // console.log(initialContent);
+  await sendNotification(initialContent);
+  if (
+    initialContent.includes("Natural Titanium: stock-yes") ||
+    initialContent.includes("Natural Titanium: stock-low")
+  ) {
+    await sendNotification(
+      "@" +
+        config.OWNER_USERNAME +
+        "\n Your iphone has stock!!",
+    );
+  }
+  schedule("6,11,16,21,26,31,36,41,46,51,56,59 * * * *", async () => {
+    const newContent = findIphone(await fetchWebpageContent());
     // console.log(newContent);
-    console.log("Running scrape");
-    await sendNotification("Scraping..");
+    // await sendNotification(newContent);
     if (newContent !== null) {
-      if (initialContent === null) {
-        console.log("Setting initial content");
-        initialContent = newContent;
-      } else if (newContent !== initialContent) {
+      if (newContent !== initialContent) {
         console.log("Content Diff!");
-        await sendNotification(
-          "@" +
-            config.OWNER_USERNAME +
-            " Webpage content has changed!",
-        );
+        await sendNotification(newContent);
         initialContent = newContent;
+        if (
+          initialContent.includes("Natural Titanium: stock-yes") ||
+          initialContent.includes("Natural Titanium: stock-low")
+        ) {
+          await sendNotification(
+            "@" +
+              config.OWNER_USERNAME +
+              "\n Your iphone has stock!!",
+          );
+        }
       }
     }
   });
