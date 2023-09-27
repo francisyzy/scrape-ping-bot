@@ -42,13 +42,15 @@ const index = async () => {
     return next();
   });
   bot.launch();
+  console.log("starting");
+  await sendNotification("starting");
   printBotInfo(bot);
 
   // Store the initial content of the webpage
   let initialContent: string = findIphone(
     await fetchWebpageContent(),
   );
-  // console.log(initialContent);
+  console.log(initialContent);
   await sendNotification(initialContent);
   if (
     initialContent.includes("Natural Titanium: stock-yes") ||
@@ -62,8 +64,6 @@ const index = async () => {
   }
   schedule("6,11,16,21,26,31,36,41,46,51,56,59 * * * *", async () => {
     const newContent = findIphone(await fetchWebpageContent());
-    // console.log(newContent);
-    // await sendNotification(newContent);
     if (newContent !== null) {
       if (newContent !== initialContent) {
         console.log("Content Diff!");
