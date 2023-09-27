@@ -62,7 +62,7 @@ const index = async () => {
         "\n Your iphone has stock!!",
     );
   }
-  schedule("6,11,16,21,26,31,36,41,46,51,56,59 * * * *", async () => {
+  schedule("*/5 8-23 * * *", async () => {
     const newContent = findIphone(await fetchWebpageContent());
     if (newContent !== null) {
       if (newContent !== initialContent) {
